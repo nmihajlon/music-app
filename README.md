@@ -1,1 +1,1 @@
-# music-app-practice
+# music-app
