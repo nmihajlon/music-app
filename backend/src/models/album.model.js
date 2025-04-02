@@ -28,4 +28,4 @@ const AlbumSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const AlbumModel = new mongoose.model("Album", AlbumSchema);
+export const Album = new mongoose.model("Album", AlbumSchema);
