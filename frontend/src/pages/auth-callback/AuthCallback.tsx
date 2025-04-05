@@ -2,19 +2,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { api } from "@/lib/axios";
 import { useUser } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthCallback = () => {
   const { isLoaded, user } = useUser();
   const navigate = useNavigate();
+  const syncAttempted = useRef(false);
 
   useEffect(() => {
     const syncUser = async () => {
-      if (!isLoaded || !user) return;
+      if (!isLoaded || !user || syncAttempted.current) return;
 
       try {
-        console.log(user);
+        syncAttempted.current = true;
         await api.post("/auth/callback", {
           id: user.id,
           firstName: user.firstName,
@@ -28,7 +29,7 @@ const AuthCallback = () => {
       }
     };
     syncUser();
-  }, [isLoaded, user, navigate]);
+  }, [isLoaded, user, navigate, syncAttempted]);
 
   return (
     <div className="h-screen w-screen bg-black flex items-center justify-center">
