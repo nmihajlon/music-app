@@ -9,10 +9,9 @@ import {
 } from "@clerk/clerk-react";
 import Home from "./pages/Home.tsx";
 import AuthProvider from "./provider/AuthProvider.tsx";
-import AuthCallback from "./auth-callback/AuthCallback.tsx";
+import AuthCallback from "./pages/auth-callback/AuthCallback.tsx";
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-console.log(PUBLISHABLE_KEY);
+const PUBLISHABLE_KEY=import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }

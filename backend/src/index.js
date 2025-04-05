@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from 'dotenv';
 import fileUpload from "express-fileupload";
 import path from "path";
+import cors from 'cors';
 
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
@@ -28,6 +29,11 @@ app.use(fileUpload({
         fileSize: 10*1024*1024, //10MB
     }
 }));
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);

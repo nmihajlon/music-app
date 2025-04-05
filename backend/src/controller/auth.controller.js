@@ -14,6 +14,9 @@ export const authCallback = async (req, res, next) => {
         imageUrl,
       });
     }
+    else{
+      console.log("User already exist in base");
+    }
 
     res.status(200).json({ success: true });
   } catch (error) {
