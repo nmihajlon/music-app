@@ -12,6 +12,7 @@ import AuthProvider from "./provider/AuthProvider.tsx";
 import AuthCallback from "./pages/auth-callback/AuthCallback.tsx";
 import MainLayout from "./layout/MainLayout.tsx";
 import Chat from "./pages/Chat.tsx";
+import AlbumDetail from "./pages/AlbumDetail.tsx";
 
 const PUBLISHABLE_KEY=import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 if (!PUBLISHABLE_KEY) {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
         path: "/chat",
         element: <Chat />,
       },
+
+      {
+        path: "/album/:albumId",
+        element: <AlbumDetail/>
+      }
     ],
     errorElement: <div>Error page</div>,
   },
