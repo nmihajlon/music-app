@@ -2,12 +2,18 @@ import PlayListSkeleton from "@/components/skeletons/PlayListSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { useMusicStore } from "@/stores/useMusic.store";
 import { SignedIn } from "@clerk/clerk-react";
 import { HomeIcon, Library, MessageCircleIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSidebar = () => {
-  const isLoading = true;
+  const { songs, albums, isLoading, fetchAlbums } = useMusicStore();
+
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
 
   return (
     <div className="h-full flex flex-col">
@@ -47,18 +53,37 @@ const LeftSidebar = () => {
 
       {/* Library section */}
       <div className="flex-1 rounded-lg bg-zinc-800 p-4">
-        <div className="flex flex-col justify-between mb-4">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center text-white">
             <Library className="size-5 mr-2" />
             <span className="hidden md:inline font-semibold">PlayList</span>
           </div>
         </div>
-        <ScrollArea className="h-[calc(100vh - 300px)]">
+        <ScrollArea className="h-[calc(100vh-300px)]">
           <div className="space-y-2">
             {isLoading ? (
-                <PlayListSkeleton />
+              <PlayListSkeleton />
             ) : (
-                <div>Some music</div>
+              albums.map((album) => (
+                <Link
+                  key={album._id}
+                  to={`/album/${album._id}`}
+                  className="p-2 hover:bg-zinc-800 rounded-md flex items-center gap-3 group cursor-pointer"
+                >
+                  <img
+                    src={album.imageUrl}
+                    alt={album.title}
+                    className="size-12 rounded-md flex-shrink-0 object-cover"
+                  />
+
+                  <div className="flex-1 min-w-0 hidden md:block">
+                    <p className="font-medium truncate">{album.title}</p>
+                    <p className="text-sm text-zinc-400 truncate">
+                      Album • {album.artist}
+                    </p>
+                  </div>
+                </Link>
+              ))
             )}
           </div>
         </ScrollArea>
